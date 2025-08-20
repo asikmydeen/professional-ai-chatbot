@@ -12,11 +12,7 @@ export class ChatBot extends LitElement {
     static properties = {
         endpoint: { type: String },
         heading: { type: String },
-        models: { type: Array },
         theme: { type: String },
-        initialTemperature: { type: Number },
-        initialMaxTokens: { type: Number },
-        initialTopP: { type: Number },
         input: { type: String },
         messages: { type: Array },
         isLoading: { type: Boolean },
@@ -36,7 +32,6 @@ export class ChatBot extends LitElement {
         chatContainerHeight: { type: Number },
         language: { type: String },
         analyticsEnabled: { type: Boolean },
-        authToken: { type: String },
         maxRetryAttempts: { type: Number },
         retryDelay: { type: Number },
         errorNotification: { type: Function },
@@ -48,20 +43,12 @@ export class ChatBot extends LitElement {
         super();
         this.endpoint = '';
         this.heading = 'AI Assistant';
-        this.models = this.models;
         this.theme = 'dark';
-        this.initialTemperature = 0.7;
-        this.initialMaxTokens = 2048;
-        this.initialTopP = 0.9;
         this.input = '';
         this.messages = JSON.parse(localStorage.getItem('chatMessages')) || [];
         this.isLoading = false;
         this.isChatOpen = false;
         this.isSettingsOpen = false;
-        this.selectedModel = this.selectedModel;
-        this.temperature = this.initialTemperature;
-        this.maxTokens = this.initialMaxTokens;
-        this.topP = this.initialTopP;
         this.enableSettings = true;
         this.buttonLabels = { send: 'Send', close: 'Close', settings: 'Settings' };
         this.fontSize = 'text-base';
@@ -72,7 +59,6 @@ export class ChatBot extends LitElement {
         this.chatContainerHeight = 600;
         this.language = 'en';
         this.analyticsEnabled = false;
-        this.authToken = '';
         this.maxRetryAttempts = 3;
         this.retryDelay = 2000;
         this.errorNotification = (message) => console.error(message);
@@ -85,7 +71,15 @@ export class ChatBot extends LitElement {
         this.renderSettings = ChatBotSettings.renderSettings.bind(this);
     }
 
+    updated(changedProperties) {
+        super.updated(changedProperties);
+        if (changedProperties.has('authToken')) {
+            console.log('authToken property changed to:', this.authToken);
+        }
+    }
+
     firstUpdated() {
+        console.log('Component firstUpdated - authToken:', this.authToken);
         ChatBotTheme.loadThemeFromLocalStorage(this);
         ChatBotTheme.applyTheme(this);
         this.syncSettingsUI();

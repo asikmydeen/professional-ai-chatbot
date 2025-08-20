@@ -76,62 +76,6 @@ export const ChatBotSettings = {
         return html`
       <div class="settings-container p-4 border-b" style="background: var(--bg-color); border-color: var(--border-color); border-radius: 8px; box-shadow: 0 2px 4px var(--shadow-color);">
         <div class="setting-item mb-4">
-          <label for="model-select" class="block text-sm font-medium mb-1" style="color: var(--text-color);">Model</label>
-          <select
-            id="model-select"
-            .value=${chatBot.selectedModel}
-            @change=${(e) => chatBot.selectedModel = e.target.value}
-            class="block w-full pl-3 pr-10 py-2 text-base rounded-md border"
-            style="background: var(--input-bg); color: var(--input-text); border-color: var(--border-color);"
-            aria-label="Model Selection"
-          >
-            ${chatBot.models.map((model) => html`
-              <option value=${model} ?selected=${model === chatBot.selectedModel}>${model}</option>
-            `)}
-          </select>
-        </div>
-        <div class="setting-item mb-4">
-          <label for="temperature" class="block text-sm font-medium mb-1" style="color: var(--text-color);">Temperature: ${chatBot.temperature.toFixed(2)}</label>
-          <input
-            type="range"
-            id="temperature"
-            .value=${chatBot.temperature}
-            @input=${(e) => chatBot.temperature = parseFloat(e.target.value)}
-            min="0"
-            max="2"
-            step="0.1"
-            class="w-full"
-            aria-label="Temperature adjustment"
-          />
-        </div>
-        <div class="setting-item mb-4">
-          <label for="max-tokens" class="block text-sm font-medium mb-1" style="color: var(--text-color);">Max Tokens: ${chatBot.maxTokens}</label>
-          <input
-            type="range"
-            id="max-tokens"
-            .value=${chatBot.maxTokens}
-            @input=${(e) => chatBot.maxTokens = parseInt(e.target.value)}
-            min="1"
-            max="8192"
-            class="w-full"
-            aria-label="Max tokens adjustment"
-          />
-        </div>
-        <div class="setting-item mb-4">
-          <label for="top-p" class="block text-sm font-medium mb-1" style="color: var(--text-color);">Top P: ${chatBot.topP.toFixed(2)}</label>
-          <input
-            type="range"
-            id="top-p"
-            .value=${chatBot.topP}
-            @input=${(e) => chatBot.topP = parseFloat(e.target.value)}
-            min="0"
-            max="1"
-            step="0.1"
-            class="w-full"
-            aria-label="Top P adjustment"
-          />
-        </div>
-        <div class="setting-item mb-4">
           <h3 class="text-sm font-medium mb-1" style="color: var(--text-color);">Adjust Theme</h3>
           <input
             type="range"

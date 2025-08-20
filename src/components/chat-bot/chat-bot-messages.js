@@ -99,9 +99,17 @@ export const ChatBotMessages = {
                 'Content-Type': 'application/json',
             };
 
+            // Debug logging
+            console.log('Auth token value:', this.authToken);
+            console.log('Auth token exists:', !!this.authToken);
+            console.log('Auth token after trim:', this.authToken?.trim());
+            
             // Only add the Authorization header if authToken is provided and not empty
             if (this.authToken && this.authToken.trim() !== '') {
                 headers['Authorization'] = `Bearer ${this.authToken}`;
+                console.log('Authorization header set:', headers['Authorization']);
+            } else {
+                console.log('No auth token provided or empty');
             }
 
             const response = await fetch(this.endpoint, {
@@ -141,12 +149,21 @@ export const ChatBotMessages = {
                         }
                         try {
                             const parsed = JSON.parse(data);
-                            const content = parsed?.choices?.[0]?.delta?.content;
+                            // Handle both OpenAI format and our simplified backend format
+                            const content = parsed.content !== undefined ? parsed.content : (parsed?.choices?.[0]?.delta?.content);
+                            const isDone = parsed.done || false;
+                            
                             if (content) {
                                 assistantMessage.content += content;
                                 this.messages = [...this.messages.slice(0, -1), { ...assistantMessage }];
                                 this.requestUpdate();
                                 this.scrollToBottom();
+                            }
+                            
+                            if (isDone) {
+                                this.scrollToBottom(true);
+                                this.saveMessagesToLocalStorage();
+                                return;
                             }
                         } catch (error) {
                             console.error('Error parsing JSON:', error, 'Data:', data);

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot Test</title>
+    <script type="module" src="./dist/chatbot.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #040405;
+        }
+        h1 {
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+        .info {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .info code {
+            background-color: #f3f4f6;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Professional AI Chatbot Test</h1>
+
+    <div class="info">
+        <p><strong>New Simplified Architecture:</strong></p>
+        <ol>
+            <li>Build the component first: <code>npm run build</code></li>
+            <li>Set up your backend endpoint (see BACKEND_SPECIFICATION.md)</li>
+            <li>Update the endpoint URL below to point to your backend</li>
+            <li>No API keys or configuration needed in the frontend!</li>
+        </ol>
+        <p>The component now only requires an endpoint URL. All configuration (API keys, model selection, parameters) is managed securely on your backend.</p>
+    </div>
+
+
+    <chat-bot
+        endpoint="http://localhost:3000/api/chat"
+        heading="AI Assistant"
+        theme="dark"
+    ></chat-bot>
+
+    <script>
+        // You can interact with the chatbot programmatically if needed
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatBot = document.querySelector('chat-bot');
+
+            // Example: Listen for custom events if the component emits any
+            if (chatBot) {
+                console.log('Chatbot component loaded successfully');
+            }
+        });
+    </script>
+</body>
+</html>

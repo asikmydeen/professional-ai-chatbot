@@ -1,6 +1,13 @@
 # Professional AI Chatbot
 
-A customizable, professional-looking AI chatbot web component that can be integrated into any web application, regardless of the framework or library you're using.
+A secure, customizable, professional-looking AI chatbot web component that can be integrated into any web application. Works with any framework or vanilla JavaScript.
+
+## 🔐 Security-First Design
+
+This chatbot component uses a backend-centric architecture where:
+- **No API keys in the frontend** - All sensitive configuration lives on your backend
+- **Simple integration** - Just provide an endpoint URL
+- **Full control** - Your backend manages models, parameters, and rate limiting
 
 ## Table of Contents
 
@@ -20,19 +27,39 @@ A customizable, professional-looking AI chatbot web component that can be integr
   - [Contributing](#contributing)
   - [License](#license)
 
-## Installation
+## Quick Start
 
-You can install the chatbot component using npm:
+### 1. Set up your backend
+
+First, create a backend endpoint that will handle chat requests. See `backend-example.js` for a complete example:
+
+```javascript
+// Your backend endpoint should:
+// 1. Accept POST requests with { messages: [...], stream: true }
+// 2. Store your API keys and configuration securely
+// 3. Forward requests to your AI provider (OpenAI, Claude, etc.)
+// 4. Stream or return responses in the expected format
+```
+
+### 2. Install the component
 
 ```bash
 npm install professional-ai-chatbot
 ```
 
-Alternatively, you can use it directly via a CDN:
+Or use via CDN:
 
 ```html
-<script type="module" src="https://unpkg.com/professional-ai-chatbot@1.0.1/dist/chatbot.js"></script>
+<script type="module" src="https://unpkg.com/professional-ai-chatbot@latest/dist/chatbot.js"></script>
 ```
+
+### 3. Add to your HTML
+
+```html
+<chat-bot endpoint="https://your-backend.com/api/chat"></chat-bot>
+```
+
+That's it! No API keys, no configuration in the frontend.
 
 ## Usage
 
@@ -47,17 +74,13 @@ To use the chatbot in a basic HTML file, include the script and use the custom e
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Chatbot Demo</title>
-    <script type="module" src="https://unpkg.com/professional-ai-chatbot@1.0.1/dist/chatbot.js"></script>
+    <script type="module" src="https://unpkg.com/professional-ai-chatbot@latest/dist/chatbot.js"></script>
 </head>
 <body>
     <chat-bot
-        endpoint="https://your-api-endpoint.com"
+        endpoint="https://your-backend.com/api/chat"
         heading="AI Assistant"
         theme="dark"
-        initial-model="gpt-4o"
-        initial-temperature="0.7"
-        initial-max-tokens="2048"
-        initial-top-p="0.9"
     ></chat-bot>
 </body>
 </html>
@@ -301,15 +324,45 @@ Use it in your Svelte app:
 
 ## API Reference
 
+### Component Attributes
+
 The `chat-bot` component accepts the following attributes:
 
-- `endpoint` (required): The API endpoint for the chatbot backend.
+- `endpoint` (required): The API endpoint for your chat backend
 - `heading` (optional): The title displayed in the chat window. Default: "AI Assistant"
 - `theme` (optional): The color theme of the chatbot. Can be "light" or "dark". Default: "dark"
-- `initial-model` (optional): The initial AI model to use. Default: "gpt-4o"
-- `initial-temperature` (optional): The initial temperature setting for the AI. Default: 1
-- `initial-max-tokens` (optional): The initial maximum number of tokens for AI responses. Default: 4096
-- `initial-top-p` (optional): The initial top-p setting for the AI. Default: 1
+
+### Backend API Specification
+
+Your backend endpoint should:
+
+1. **Accept POST requests** with the following JSON body:
+   ```json
+   {
+     "messages": [
+       {"role": "user", "content": "Hello"},
+       {"role": "assistant", "content": "Hi there!"}
+     ],
+     "stream": true  // Optional, defaults to true
+   }
+   ```
+
+2. **Return responses** in one of two formats:
+   - **Streaming (SSE)**: Server-Sent Events with format:
+     ```
+     data: {"content": "Hello", "done": false}
+     data: {"content": " there", "done": false}
+     data: {"content": "", "done": true}
+     ```
+   - **Non-streaming**: JSON response:
+     ```json
+     {
+       "content": "Complete response text",
+       "done": true
+     }
+     ```
+
+See `BACKEND_SPECIFICATION.md` for complete details and `backend-example.js` for a working example.
 
 ## Styling
 
