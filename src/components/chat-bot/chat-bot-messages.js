@@ -57,9 +57,14 @@ export const ChatBotMessages = {
         // Convert Markdown to HTML
         const renderer = new marked.Renderer();
         renderer.code = (code, language) => {
-            const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
-            const highlightedCode = hljs.highlight(validLanguage, code).value;
-            return `<pre><code class="hljs ${validLanguage}">${highlightedCode}</code></pre>`;
+            if (language && hljs.getLanguage(language)) {
+                const highlightedCode = hljs.highlight(language, code).value;
+                return `<pre><code class="hljs ${language}">${highlightedCode}</code></pre>`;
+            } else {
+                // No language specified or language not supported - return plain code
+                const escapedCode = code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                return `<pre><code class="hljs">${escapedCode}</code></pre>`;
+            }
         };
 
         const htmlContent = marked(message.content, { renderer });
