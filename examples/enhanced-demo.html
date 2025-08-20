@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Chatbot Demo - All Features</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 40px;
+            background: #f9fafb;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #3b82f6;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .feature-card h3 {
+            margin: 0 0 10px 0;
+            color: #1f2937;
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .demo-section {
+            margin: 40px 0;
+            padding: 20px;
+            background: #eff6ff;
+            border-radius: 8px;
+        }
+
+        .demo-section h2 {
+            margin-top: 0;
+            color: #1e40af;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .code-block code {
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+        }
+
+        .test-messages {
+            margin: 20px 0;
+        }
+
+        .test-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.2s;
+        }
+
+        .test-btn:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Enhanced AI Chatbot Demo</h1>
+        <p class="subtitle">Experience all the powerful features of the portable chatbot</p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>🖱️ Drag & Drop</h3>
+                <p>Click and drag the header to move the chat window anywhere on screen</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>📐 Resizable</h3>
+                <p>Drag the bottom-right corner to resize the chat window</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>📎 File Upload</h3>
+                <p>Attach up to 5 files (images, PDFs, documents) with your messages</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>🎨 Rich Markdown</h3>
+                <p>Full markdown support with tables, lists, code blocks, and more</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>🌓 Theme Toggle</h3>
+                <p>Switch between light and dark themes with one click</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>💾 Export Chat</h3>
+                <p>Download your entire conversation history as a text file</p>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Test Markdown Rendering</h2>
+            <p>Click these buttons to send test messages showcasing markdown features:</p>
+
+            <div class="test-messages">
+                <button class="test-btn" onclick="sendTestMessage('headers')">Test Headers</button>
+                <button class="test-btn" onclick="sendTestMessage('lists')">Test Lists</button>
+                <button class="test-btn" onclick="sendTestMessage('code')">Test Code</button>
+                <button class="test-btn" onclick="sendTestMessage('table')">Test Table</button>
+                <button class="test-btn" onclick="sendTestMessage('full')">Full Demo</button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Try These Features</h2>
+            <ol>
+                <li><strong>Move the window:</strong> Click and drag the blue header</li>
+                <li><strong>Resize:</strong> Drag the bottom-right corner</li>
+                <li><strong>Attach files:</strong> Click the paperclip icon</li>
+                <li><strong>Change theme:</strong> Click the theme icon in the header</li>
+                <li><strong>Download chat:</strong> Click the download icon</li>
+                <li><strong>Copy code:</strong> Hover over any code block and click "Copy"</li>
+            </ol>
+        </div>
+
+        <div class="code-block">
+            <code>// Initialize the enhanced chatbot
+const chatbot = createChatbot({
+    endpoint: 'http://localhost:3000/api/chat',
+    heading: 'AI Assistant Pro',
+    theme: 'light'
+});
+
+// The chatbot remembers its position and theme!</code>
+        </div>
+    </div>
+
+    <!-- Include the enhanced chatbot -->
+    <script src="../portable-chatbot.js"></script>
+
+    <script>
+        // Initialize chatbot
+        const chatbot = createChatbot({
+            endpoint: 'http://localhost:3000/api/chat',
+            heading: 'AI Assistant Pro',
+            theme: 'light'
+        });
+
+        // Test message functions
+        function sendTestMessage(type) {
+            let message = '';
+
+            switch(type) {
+                case 'headers':
+                    message = "# Heading 1\n## Heading 2\n### Heading 3\n\nRegular paragraph text.";
+                    break;
+
+                case 'lists':
+                    message = "**Unordered List:**\n* First item\n* Second item\n* Third item\n\n**Ordered List:**\n1. First step\n2. Second step\n3. Third step";
+                    break;
+
+                case 'code':
+                    message = "Here's some inline `code` and a code block:\n\n```javascript\nfunction greet(name) {\n    console.log(`Hello, ${name}!`);\n}\n\ngreet('World');\n```";
+                    break;
+
+                case 'table':
+                    message = "| Feature | Status | Notes |\n| ------- | ------ | ----- |\n| Drag & Drop | ✅ | Fully implemented |\n| Resize | ✅ | Works great |\n| File Upload | ✅ | Up to 5 files |";
+                    break;
+
+                case 'full':
+                    message = `# Welcome to Enhanced Chatbot! 🎉
+
+## Features Overview
+
+This chatbot supports **rich markdown** formatting:
+
+### Text Formatting
+- **Bold text** with double asterisks
+- *Italic text* with single asterisks
+- \`Inline code\` with backticks
+
+### Lists
+**Things you can do:**
+* Drag the window around
+* Resize it to any size
+* Upload files
+* Export conversations
+
+### Code Blocks
+\`\`\`python
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+print(fibonacci(10))
+\`\`\`
+
+### Tables
+| Feature | Keyboard Shortcut |
+| ------- | ---------------- |
+| Send Message | Enter |
+| New Line | Shift + Enter |
+| Close Chat | Esc |
+
+> **Pro tip:** All your settings and position are saved automatically!
+
+### Links
+Check out [OpenAI](https://openai.com) for more information.
+
+---
+
+*Enjoy using the enhanced chatbot!*`;
+                    break;
+            }
+
+            // Open chatbot if not already open
+            if (!chatbot.isOpen) {
+                chatbot.open();
+            }
+
+            // Simulate typing the message
+            chatbot.inputEl.value = message;
+            chatbot.inputEl.style.height = 'auto';
+            chatbot.inputEl.style.height = Math.min(chatbot.inputEl.scrollHeight, 120) + 'px';
+
+            // Send after a short delay
+            setTimeout(() => {
+                chatbot.sendMessage();
+            }, 500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portable Chatbot - React Example</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- Include the portable chatbot -->
+    <script src="../portable-chatbot.js"></script>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        function App() {
+            const chatbotRef = useRef(null);
+            const [chatbotEnabled, setChatbotEnabled] = useState(true);
+
+            useEffect(() => {
+                if (chatbotEnabled && !chatbotRef.current) {
+                    // Create chatbot instance
+                    chatbotRef.current = createChatbot({
+                        endpoint: 'http://localhost:3000/api/chat',
+                        heading: 'React AI Assistant',
+                        theme: 'dark'
+                    });
+                } else if (!chatbotEnabled && chatbotRef.current) {
+                    // Destroy chatbot instance
+                    chatbotRef.current.destroy();
+                    chatbotRef.current = null;
+                }
+
+                // Cleanup on unmount
+                return () => {
+                    if (chatbotRef.current) {
+                        chatbotRef.current.destroy();
+                    }
+                };
+            }, [chatbotEnabled]);
+
+            return (
+                <div style={{ padding: '20px' }}>
+                    <h1>React Example with Portable Chatbot</h1>
+                    <p>This demonstrates how to use the portable chatbot in a React application.</p>
+
+                    <button
+                        onClick={() => setChatbotEnabled(!chatbotEnabled)}
+                        style={{
+                            padding: '10px 20px',
+                            fontSize: '16px',
+                            backgroundColor: chatbotEnabled ? '#dc2626' : '#10b981',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        {chatbotEnabled ? 'Disable' : 'Enable'} Chatbot
+                    </button>
+
+                    <div style={{ marginTop: '20px' }}>
+                        <h2>Your React App Content</h2>
+                        <p>The chatbot appears in the bottom right corner when enabled.</p>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

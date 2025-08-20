@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Optimized Chatbot</title>
+</head>
+<body>
+    <h1>Test Page for Optimized Chatbot</h1>
+    <p>The chatbot should appear in the bottom-right corner.</p>
+
+    <!-- Include the optimized chatbot script -->
+    <script src="portable-chatbot.js"></script>
+
+    <script>
+        // Initialize the chatbot
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatbot = createChatbot({
+                endpoint: 'http://localhost:3000/api/chat',
+                heading: 'AI Assistant',
+                theme: 'light'
+            });
+        });
+    </script>
+</body>
+</html>

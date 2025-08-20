@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portable Chatbot - Plain HTML Example</title>
+</head>
+<body>
+    <h1>Plain HTML Example</h1>
+    <p>The chatbot appears in the bottom right corner.</p>
+
+    <!-- Method 1: Include the script and auto-initialize with data attributes -->
+    <script src="../portable-chatbot.js"
+            data-chatbot-endpoint="http://localhost:3000/api/chat"
+            data-chatbot-heading="Customer Support"
+            data-chatbot-theme="light"></script>
+
+    <!-- Method 2: Include script and initialize manually -->
+    <!--
+    <script src="../portable-chatbot.js"></script>
+    <script>
+        // Initialize manually with more control
+        const chatbot = createChatbot({
+            endpoint: 'http://localhost:3000/api/chat',
+            heading: 'AI Assistant',
+            theme: 'light'
+        });
+    </script>
+    -->
+</body>
+</html>

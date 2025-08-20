@@ -14,8 +14,33 @@ const mockResponses = [
   "Is there anything else you'd like to know?",
 ];
 
-app.post('/api/chat', async (req, res) => {
-  const { messages, stream = true } = req.body;
+// Add multer for file upload handling
+const multer = require('multer');
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
+});
+
+app.post('/api/chat', upload.any(), async (req, res) => {
+  // Handle both JSON and multipart/form-data
+  let messages, stream = true;
+  
+  if (req.files && req.files.length > 0) {
+    // Files were uploaded
+    messages = JSON.parse(req.body.messages);
+    stream = req.body.stream === 'true';
+    
+    // Log file information
+    console.log('Files received:', req.files.map(f => ({
+      name: f.originalname,
+      size: f.size,
+      type: f.mimetype
+    })));
+  } else {
+    // Regular JSON request
+    messages = req.body.messages;
+    stream = req.body.stream !== undefined ? req.body.stream : true;
+  }
   
   if (!messages || !Array.isArray(messages)) {
     return res.status(400).json({
@@ -26,8 +51,14 @@ app.post('/api/chat', async (req, res) => {
     });
   }
 
-  // Pick a random mock response
-  const response = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+  // Pick a response based on whether files were uploaded
+  let response;
+  if (req.files && req.files.length > 0) {
+    const fileList = req.files.map(f => `${f.originalname} (${(f.size / 1024).toFixed(2)}KB)`).join(', ');
+    response = `I received your files: ${fileList}. In a real implementation, I would analyze these files and provide insights based on their content. For now, this is just a mock response demonstrating that file upload is working correctly!`;
+  } else {
+    response = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+  }
   
   if (stream) {
     // Set SSE headers

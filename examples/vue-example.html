@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portable Chatbot - Vue Example</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Vue Example with Portable Chatbot</h1>
+        <p>This demonstrates how to use the portable chatbot in a Vue application.</p>
+
+        <button
+            @click="toggleChatbot"
+            :style="{
+                padding: '10px 20px',
+                fontSize: '16px',
+                backgroundColor: chatbotEnabled ? '#dc2626' : '#10b981',
+                color: 'white',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer'
+            }"
+        >
+            {{ chatbotEnabled ? 'Disable' : 'Enable' }} Chatbot
+        </button>
+
+        <div style="margin-top: 20px;">
+            <h2>Your Vue App Content</h2>
+            <p>The chatbot appears in the bottom right corner when enabled.</p>
+            <p>Current status: <strong>{{ chatbotEnabled ? 'Enabled' : 'Disabled' }}</strong></p>
+        </div>
+    </div>
+
+    <!-- Include the portable chatbot -->
+    <script src="../portable-chatbot.js"></script>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    chatbotEnabled: true,
+                    chatbot: null
+                }
+            },
+            mounted() {
+                this.initChatbot();
+            },
+            beforeUnmount() {
+                if (this.chatbot) {
+                    this.chatbot.destroy();
+                }
+            },
+            methods: {
+                initChatbot() {
+                    if (this.chatbotEnabled && !this.chatbot) {
+                        this.chatbot = createChatbot({
+                            endpoint: 'http://localhost:3000/api/chat',
+                            heading: 'Vue AI Assistant',
+                            theme: 'light'
+                        });
+                    }
+                },
+                toggleChatbot() {
+                    this.chatbotEnabled = !this.chatbotEnabled;
+
+                    if (this.chatbotEnabled) {
+                        this.initChatbot();
+                    } else if (this.chatbot) {
+                        this.chatbot.destroy();
+                        this.chatbot = null;
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

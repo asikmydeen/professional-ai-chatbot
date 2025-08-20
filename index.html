@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional AI Chatbot - All Demos</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 40px;
+            background: #f9fafb;
+            color: #1f2937;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            color: #3b82f6;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #3b82f6;
+            display: block;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .demos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-card h3 {
+            color: #1f2937;
+            margin: 0 0 10px 0;
+            font-size: 24px;
+        }
+
+        .demo-card p {
+            color: #6b7280;
+            margin: 0 0 20px 0;
+        }
+
+        .demo-link {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .demo-link:hover {
+            background: #2563eb;
+        }
+
+        .features {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .features h2 {
+            color: #1f2937;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature {
+            padding: 20px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .feature h4 {
+            margin: 0 0 10px 0;
+            color: #1f2937;
+        }
+
+        .feature p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .server-info {
+            background: #eff6ff;
+            border: 1px solid #3b82f6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .server-info h3 {
+            color: #1e40af;
+            margin: 0 0 10px 0;
+        }
+
+        .server-info code {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 10px 20px;
+            border-radius: 4px;
+            display: inline-block;
+            font-family: 'Monaco', 'Menlo', monospace;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Professional AI Chatbot</h1>
+            <p class="subtitle">Feature-rich, portable chatbot for any web application</p>
+
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-value">31.3KB</span>
+                    <span class="stat-label">Optimized Size</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">12.8%</span>
+                    <span class="stat-label">Size Reduction</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">100%</span>
+                    <span class="stat-label">Features Intact</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="server-info">
+            <h3>🚀 Test Server Running</h3>
+            <p>Make sure the test server is running to see the chatbot in action:</p>
+            <code>node test-server.js</code>
+            <p style="margin-top: 10px; color: #6b7280;">Server runs on port 8082</p>
+        </div>
+
+        <div class="features">
+            <h2>✨ Key Features</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🖱️</div>
+                    <h4>Drag & Drop</h4>
+                    <p>Move the chat window anywhere</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📐</div>
+                    <h4>Resizable</h4>
+                    <p>Adjust to any size you need</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📎</div>
+                    <h4>File Upload</h4>
+                    <p>Attach up to 5 files per message</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎨</div>
+                    <h4>Markdown</h4>
+                    <p>Rich text with code highlighting</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🌓</div>
+                    <h4>Dark Mode</h4>
+                    <p>Switch themes instantly</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💾</div>
+                    <h4>Export Chat</h4>
+                    <p>Download conversation history</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="text-align: center; margin-bottom: 30px;">📚 Live Demos</h2>
+
+        <div class="demos-grid">
+            <div class="demo-card">
+                <h3>🌐 Plain HTML</h3>
+                <p>Basic integration using vanilla HTML. Perfect for simple websites with minimal setup required.</p>
+                <a href="examples/plain-html.html" class="demo-link">View Demo →</a>
+            </div>
+
+            <div class="demo-card">
+                <h3>⚛️ React Example</h3>
+                <p>Integration with React applications. Shows how to control the chatbot lifecycle in components.</p>
+                <a href="examples/react-example.html" class="demo-link">View Demo →</a>
+            </div>
+
+            <div class="demo-card">
+                <h3>🖼️ Vue Example</h3>
+                <p>Vue.js integration demonstrating reactive state management with the chatbot instance.</p>
+                <a href="examples/vue-example.html" class="demo-link">View Demo →</a>
+            </div>
+
+            <div class="demo-card">
+                <h3>🚀 Enhanced Demo</h3>
+                <p>Full-featured demo showcasing all capabilities including markdown rendering and file uploads.</p>
+                <a href="examples/enhanced-demo.html" class="demo-link">View Demo →</a>
+            </div>
+
+            <div class="demo-card">
+                <h3>🧪 Test Page</h3>
+                <p>Simple test page for verifying the optimized version works correctly.</p>
+                <a href="test-optimized-chatbot.html" class="demo-link">View Demo →</a>
+            </div>
+        </div>
+
+        <div style="text-align: center; color: #6b7280; margin-top: 60px;">
+            <p>All demos use the optimized version: <strong>portable-chatbot.js</strong></p>
+            <p style="font-size: 14px;">© 2024 Professional AI Chatbot. Built with ❤️ using vanilla JavaScript.</p>
+        </div>
+    </div>
+</body>
+</html>

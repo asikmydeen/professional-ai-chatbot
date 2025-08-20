@@ -1,21 +1,72 @@
 const express = require('express');
 const cors = require('cors');
+const multer = require('multer');
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+// Configure multer for file uploads
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
+});
+
 // Configuration - Use environment variables in production
 const config = {
   openaiApiKey: process.env.OPENAI_API_KEY || 'your-api-key-here',
-  model: process.env.AI_MODEL || 'gpt-4o',
+  model: process.env.AI_MODEL || 'gpt-4o', // GPT-4o supports images!
   temperature: parseFloat(process.env.AI_TEMPERATURE || '0.7'),
-  maxTokens: parseInt(process.env.AI_MAX_TOKENS || '2048'),
+  maxTokens: parseInt(process.env.AI_MAX_TOKENS || '4096'), // Increased for image responses
   topP: parseFloat(process.env.AI_TOP_P || '0.9')
 };
 
-app.post('/api/chat', async (req, res) => {
-  const { messages, stream = true } = req.body;
+app.post('/api/chat', upload.any(), async (req, res) => {
+  // Handle both JSON and multipart/form-data
+  let messages, stream = true;
+  
+  if (req.files && req.files.length > 0) {
+    // Files were uploaded
+    messages = JSON.parse(req.body.messages);
+    stream = req.body.stream === 'true';
+    
+    // Process files for GPT-4o
+    const lastUserMessage = messages[messages.length - 1];
+    if (lastUserMessage && lastUserMessage.role === 'user') {
+      // Convert message to multimodal format for GPT-4o
+      const content = [{
+        type: 'text',
+        text: lastUserMessage.content
+      }];
+      
+      // Add images to the message
+      for (const file of req.files) {
+        if (file.mimetype.startsWith('image/')) {
+          // Convert image to base64
+          const base64Image = file.buffer.toString('base64');
+          content.push({
+            type: 'image_url',
+            image_url: {
+              url: `data:${file.mimetype};base64,${base64Image}`,
+              detail: 'high' // Can be 'low', 'high', or 'auto'
+            }
+          });
+        } else {
+          // For non-image files, just add a note
+          content[0].text += `\n\n[Attached file: ${file.originalname} (${(file.size / 1024).toFixed(2)}KB) - Note: GPT-4o can only process images directly]`;
+        }
+      }
+      
+      // Update the message with multimodal content
+      lastUserMessage.content = content;
+    }
+    
+    console.log('Files processed for GPT-4o');
+  } else {
+    // Regular JSON request
+    messages = req.body.messages;
+    stream = req.body.stream !== undefined ? req.body.stream : true;
+  }
   
   if (!messages || !Array.isArray(messages)) {
     return res.status(400).json({
